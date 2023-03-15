@@ -20,8 +20,8 @@ Setting up the systemd services simply involves adding the minecraft@instanceNam
 ### Basic Usage Example - Vanilla Server
 1. As the user "minecraft", create a folder for the server files at `/home/minecraft/vanilla`.
 1. Place the server jar, start.sh, and console.sh files into `/home/minecraft/vanilla`. If the server jar file is not named "server.jar", it will fail to start. Either rename it to "server.jar" or see the configuration section on how to use a different jar name.
-1. To start the server, run `./start.sh`.
-1. To interact with the server console, run `./console.sh`. Ensure the tty number in `console.sh` is the same as in the service file. To exit the tty, press the ESC key 3 times. Also ensure that the "conspy" tool is installed.
+1. Before starting, change the service name in "start.sh" to match the systemd service name. To start the server, run `./start.sh`.
+1. Ensure that the "conspy" tool is installed before running "console.sh". Ensure the tty number in `console.sh` is the same as in the service file. To interact with the server console, run `./console.sh`.  To exit the tty, press the ESC key 3 times.
 1. To stop the server gracefully, enter the "stop" command into the server console.
 
 ### Configuration
