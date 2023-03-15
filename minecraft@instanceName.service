@@ -1,0 +1,43 @@
+[Unit]
+Description=Minecraft Server - %i
+After=network.target
+ConditionPathExists=/home/minecraft/%i
+
+[Service]
+WorkingDirectory=/home/minecraft/%i
+
+User=minecraft
+Group=minecraft
+
+PrivateUsers=true
+ProtectSystem=full
+ProtectHome=false
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+NoNewPrivileges=true
+
+# Set default variables
+Environment=MIN_MEM=1024M
+Environment=MAX_MEM=1024M
+Environment=JAVA_PARAMETERS=""
+Environment=JAR_PATH=server.jar
+
+# Attach the console to a tty for use with conspy
+StandardInput=tty-fail
+StandardOutput=tty
+TTYVTDisallocate=yes
+# This tty number shoud match the one in console.sh
+TTYPath=/dev/tty2
+
+# Override default variable values in environment file
+EnvironmentFile=/home/minecraft/%i/systemd.conf
+
+ExecStart=/usr/bin/sh -c "/usr/bin/java -server -Xms${MIN_MEM} -Xmx${MAX_MEM} ${JAVA_PARAMETERS} -jar ${JAR_PATH} nogui"
+Restart=on-failure
+RestartSec=60s
+
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
