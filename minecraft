@@ -1,0 +1,12 @@
+# Allow members of minecraft group to start/stop/restart any minecraft service
+%minecraft	ALL=(root) /usr/bin/systemctl start minecraft@*.service
+%minecraft	ALL=(root) /usr/bin/systemctl stop minecraft@*.service
+%minecraft	ALL=(root) /usr/bin/systemctl restart minecraft@*.service
+
+# systemctl status intentionally left out because minimal information is available to all users without sudo
+
+# Allow members of minecraft group to view journalctl logs for the minecraft units
+%minecraft	ALL=(root) /usr/bin/journalctl -xefu minecraft@*.service
+
+# Allow members of minecraft group to access tty
+%minecraft	ALL=(root) /usr/bin/conspy *
