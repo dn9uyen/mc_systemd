@@ -29,6 +29,7 @@ Setting up the systemd services simply involves adding the minecraft@instanceNam
 Besides setting the TTYPath, the systemd files do not need to be edited directly. Each servers' settings can be configured by adding a file named "systemd.conf" into each servers' respective directory. For the example above, this would be at `/home/minecraft/vanilla/systemd.conf`.
 
 These are the possible options:
-- MIN_MEM - This is the minimum server memory.
-- MAX_MEM - This is the maximum server memory.
-- JAR_PATH - Set the path/name of the jar file for the server. This is relative to the server's directory.
+- MIN_MEM - This is the minimum server memory. It is the same as the -Xms jvm argument
+- MAX_MEM - This is the maximum server memory. It is the same as the -xmx jvm argument
+- JAVA_PARAMETERS - These are any other jvm arguments.
+- JAR_PATH - This is the path/name of the jar file for the server. This is relative to the server's directory.
