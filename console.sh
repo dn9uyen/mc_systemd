@@ -4,4 +4,4 @@
 TTY=$(grep TTYPath $"/etc/systemd/system/minecraft@${PWD##*/}.service"| awk -F= '{print $2}')
 
 # Open TTY
-conspy ${TTY:8}
+sudo conspy ${TTY:8}
