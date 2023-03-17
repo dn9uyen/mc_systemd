@@ -15,7 +15,7 @@ Since we don't want to run the servers as root, the servers are run under the re
 In order for the user to maintain the servers, we need to give specific sudo permissions by copying the `minecraft` file into `/etc/sudoers.d`
 
 ### Setting up the systemd service
-Setting up the systemd services requires adding the minecraft@instanceName.service file into `/etc/systemd/system`. There needs to be one service file for each minecraft server. Make sure to rename the service file to match the instance name in `/home/minecraft`. The "TTYPath" option in the service files also needs to be changed to whatever tty you want to run the server in. By default, it is set to run in `/dev/tty2`. The same tty number should be set in the `console.sh` file. Multiple servers cannot share the same tty. Execute `sudo systemctl daemon-reload` to save changes to systemd.
+Setting up the systemd services requires adding the minecraft@instanceName.service file into `/etc/systemd/system`. There needs to be one service file for each minecraft server. Make sure to rename the service file to match the instance name in `/home/minecraft`. The "TTYPath" option in the service files also needs to be changed to whatever tty you want to run the server in. By default, it is set to run in `/dev/tty2`. Multiple servers cannot share the same tty. Execute `sudo systemctl daemon-reload` to save changes to systemd.
 
 ### Basic Usage Example - Vanilla Server
 1. Switch to the minecraft user by running `su minecraft`. Create a folder for the server files at `/home/minecraft/vanilla`.
