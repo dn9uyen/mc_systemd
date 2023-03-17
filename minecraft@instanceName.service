@@ -27,7 +27,7 @@ Environment=JAR_PATH=server.jar
 StandardInput=tty-fail
 StandardOutput=tty
 TTYVTDisallocate=yes
-# This tty number shoud match the one in console.sh
+# Change this to an unused TTY
 TTYPath=/dev/tty2
 
 # Override default variable values in environment file
