@@ -13,6 +13,8 @@ BACKUP_PATH="${BACKUP_DIR}/${DATETIME}"
 LATEST_LINK="${BACKUP_DIR}/latest"
 
 if [ $1 == "restore" ]; then
+    mcrcon -P ${PORT} -p password "tellraw @a {\"text\":\"[Server] Sever stopping...\",\"color\":\"red\"}" stop
+    sleep 10s
     rsync -aAXv --delete --exclude="backups" $2 ${SOURCE_DIR}/
     exit 0
 fi
