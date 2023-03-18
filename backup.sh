@@ -6,16 +6,20 @@ set -o pipefail
 
 PORT=25575
 
-mcrcon -P ${PORT} -p password "tellraw @a {\"text\":\"[Backup] Sever backup starting...\",\"color\":\"gray\"}" save-off
-sleep 10s
-mcrcon -P ${PORT} -p password save-all
-sleep 10s
-
 SOURCE_DIR="$PWD"
 BACKUP_DIR="$PWD/backups"
 DATETIME="$(date '+%Y-%m-%dT%H:%M:%SZ')-$1"
 BACKUP_PATH="${BACKUP_DIR}/${DATETIME}"
 LATEST_LINK="${BACKUP_DIR}/latest"
+
+if [ $1 == "restore" ]; then
+    rsync -aAXv --delte --exclude="backups" $2 ${SOURCE_DIR}/
+fi
+
+mcrcon -P ${PORT} -p password "tellraw @a {\"text\":\"[Backup] Sever backup starting...\",\"color\":\"gray\"}" save-off
+sleep 10s
+mcrcon -P ${PORT} -p password save-all
+sleep 10s
 
 mkdir -p "${BACKUP_DIR}"
 
