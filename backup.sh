@@ -14,6 +14,7 @@ LATEST_LINK="${BACKUP_DIR}/latest"
 
 if [ $1 == "restore" ]; then
     rsync -aAXv --delte --exclude="backups" $2 ${SOURCE_DIR}/
+    exit 0
 fi
 
 mcrcon -P ${PORT} -p password "tellraw @a {\"text\":\"[Backup] Sever backup starting...\",\"color\":\"gray\"}" save-off
