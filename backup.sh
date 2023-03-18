@@ -5,6 +5,7 @@ set -o nounset
 set -o pipefail
 
 PORT=25575
+PASSWORD="password"
 
 SOURCE_DIR="$PWD"
 BACKUP_DIR="$PWD/backups"
@@ -13,15 +14,15 @@ BACKUP_PATH="${BACKUP_DIR}/${DATETIME}"
 LATEST_LINK="${BACKUP_DIR}/latest"
 
 if [ $1 == "restore" ]; then
-    mcrcon -P ${PORT} -p password "tellraw @a {\"text\":\"[Server] Sever stopping...\",\"color\":\"red\"}" stop
+    mcrcon -P ${PORT} -p ${PASSWORD} "tellraw @a {\"text\":\"[Server] Sever stopping...\",\"color\":\"red\"}" stop
     sleep 10s
     rsync -aAXv --delete --exclude="backups" $2 ${SOURCE_DIR}/
     exit 0
 fi
 
-mcrcon -P ${PORT} -p password "tellraw @a {\"text\":\"[Backup] Sever backup starting...\",\"color\":\"gray\"}" save-off
+mcrcon -P ${PORT} -p ${PASSWORD} "tellraw @a {\"text\":\"[Backup] Sever backup starting...\",\"color\":\"gray\"}" save-off
 sleep 10s
-mcrcon -P ${PORT} -p password save-all
+mcrcon -P ${PORT} -p ${PASSWORD} save-all
 sleep 10s
 
 mkdir -p "${BACKUP_DIR}"
@@ -47,6 +48,6 @@ fi
 rm -rf "${LATEST_LINK}"
 ln -s "${BACKUP_PATH}" "${LATEST_LINK}"
 
-mcrcon -P ${PORT} -p password "tellraw @a {\"text\":\"[Backup] Sever backup finished.\",\"color\":\"gray\"}" save-on
+mcrcon -P ${PORT} -p ${PASSWORD} "tellraw @a {\"text\":\"[Backup] Sever backup finished.\",\"color\":\"gray\"}" save-on
 BACKUP_SIZE=$(du -hs ${BACKUP_PATH}/world | awk '{print $1}')
-mcrcon -P ${PORT} -p password "tellraw @a {\"text\":\"[Backup] World size: ${BACKUP_SIZE}b\",\"color\":\"gray\"}" save-on
+mcrcon -P ${PORT} -p ${PASSWORD} "tellraw @a {\"text\":\"[Backup] World size: ${BACKUP_SIZE}b\",\"color\":\"gray\"}" save-on
