@@ -1,0 +1,4 @@
+# Full backup every other week
+0 0 */15 * * /home/minecraft/instanceName/backup.sh full
+# Incremental backup daily
+0 0 * * * /home/minecraft/instanceName/backup.sh incremental
