@@ -7,6 +7,9 @@ The systemd service names are in the format minecraft@instanceName.service; Some
 
 The services must be ran as the user "minecraft".  This user's home directory should be /home/minecraft.  All the server files should be kept inside this directory.
 
+### Automatic backups
+backup.sh will save backups to a subdirectory named "backups" inside of the server directory. Running `./backup.sh full` will perform a full backup. It will also remove all incremental backups currently inside of the backups folder. Running `./backup.sh incremental` will perform an incremental backup. Backups can be automated by pasting the `cron` file into the crontab file. By default it will make incremental backups daily and full backups every other week. Backup.sh has to be inside the server's subdirectory, such as `/home/minecraft/vanilla/backup.sh`, to work.
+
 ### Setting up the user "minecraft"
 Since we don't want to run the servers as root, the servers are run under the restricted user "minecraft". We can create the user and group "minecraft" with password "password" and home directory "minecraft" with the command:
 
@@ -19,7 +22,7 @@ Setting up the systemd services requires adding the minecraft@instanceName.servi
 
 ### Basic Usage Example - Vanilla Server
 1. Switch to the minecraft user by running `su minecraft`. Create a folder for the server files at `/home/minecraft/vanilla`.
-1. Place the server jar, start.sh, and console.sh files into `/home/minecraft/vanilla`. If the server jar file is not named "server.jar", it will fail to start. Either rename it to "server.jar" or see the configuration section on how to use a different jar name.
+1. Place the server jar, start.sh, and console.sh files into `/home/minecraft/vanilla`. Optionally add the backup.sh file as well. If the server jar file is not named "server.jar", it will fail to start. Either rename it to "server.jar" or see the configuration section on how to use a different jar name. 
 1. Place the systemd service file into `/etc/systemd/system`. Rename the file accordingly and change the "TTYPath" to an unused TTY.
 1. To start the server, run `./start.sh`.
 1. To interact with the server console, run `./console.sh`. Ensure that the "conspy" tool is installed before running "console.sh". To exit the tty, press the ESC key 3 times.
@@ -32,5 +35,4 @@ These are the possible options:
 - JAVA_PARAMETERS - These are jvm arguments that the server will start with.
 - JAR_PATH - This is the path/name of the jar file for the server. This is relative to the server's directory.
 
-### Automatic backups
-`./backup.sh` will save backups to a subdirectory named "backups" inside of the server directory. Running `./backup.sh full` will perform a full backup. It will also remove all incremental backups currently inside of the backups folder. Running `./backup.sh incremental` will perform an incremental backup. Backups can be automated by pasting the `cron` file into the crontab file. By default it will make incremental backups daily and full backups every other week.
+
