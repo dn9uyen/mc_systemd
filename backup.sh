@@ -4,11 +4,18 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-readonly SOURCE_DIR="$PWD"
-readonly BACKUP_DIR="$PWD/backups"
-readonly DATETIME="$(date '+%Y-%m-%dT%H:%M:%SZ')-$1"
-readonly BACKUP_PATH="${BACKUP_DIR}/${DATETIME}"
-readonly LATEST_LINK="${BACKUP_DIR}/latest"
+PORT=25575
+
+mcrcon -P ${PORT} -p password "tellraw @a {\"text\":\"[Backup] Sever backup starting...\",\"color\":\"gray\"}" save-off
+sleep 10s
+mcrcon -P ${PORT} -p password save-all
+sleep 10s
+
+SOURCE_DIR="$PWD"
+BACKUP_DIR="$PWD/backups"
+DATETIME="$(date '+%Y-%m-%dT%H:%M:%SZ')-$1"
+BACKUP_PATH="${BACKUP_DIR}/${DATETIME}"
+LATEST_LINK="${BACKUP_DIR}/latest"
 
 mkdir -p "${BACKUP_DIR}"
 
@@ -32,3 +39,7 @@ fi
 
 rm -rf "${LATEST_LINK}"
 ln -s "${BACKUP_PATH}" "${LATEST_LINK}"
+
+mcrcon -P ${PORT} -p password "tellraw @a {\"text\":\"[Backup] Sever backup finished.\",\"color\":\"gray\"}" save-on
+BACKUP_SIZE=$(du -hs ${BACKUP_PATH}/world | awk '{print $1}')
+mcrcon -P ${PORT} -p password "tellraw @a {\"text\":\"[Backup] World size: ${BACKUP_SIZE}b\",\"color\":\"gray\"}" save-on
