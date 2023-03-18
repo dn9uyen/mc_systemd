@@ -13,7 +13,7 @@ BACKUP_PATH="${BACKUP_DIR}/${DATETIME}"
 LATEST_LINK="${BACKUP_DIR}/latest"
 
 if [ $1 == "restore" ]; then
-    rsync -aAXv --delte --exclude="backups" $2 ${SOURCE_DIR}/
+    rsync -aAXv --delete --exclude="backups" $2 ${SOURCE_DIR}/
     exit 0
 fi
 
