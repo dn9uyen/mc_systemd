@@ -26,9 +26,11 @@ Setting up the systemd services requires adding the minecraft@instanceName.servi
 1. To stop the server gracefully, enter the "stop" command into the server console. If the server is stopped using `systemctl stop minecraft@instanceName.service`, the server will abruptly stop without saving.
 
 ### Configuration
-
 Besides setting the TTYPath, the systemd files do not need to be edited directly. Each servers' settings can be configured by adding the "systemd.conf" file into each servers' respective directory. For the example above, this would be at `/home/minecraft/vanilla/systemd.conf`.
 
 These are the possible options:
 - JAVA_PARAMETERS - These are jvm arguments that the server will start with.
 - JAR_PATH - This is the path/name of the jar file for the server. This is relative to the server's directory.
+
+### Automatic backups
+`./backup.sh` will save backups to a subdirectory named "backups" inside of the server directory. Running `./backup.sh full` will perform a full backup. It will also remove all incremental backups currently inside of the backups folder. Running `./backup.sh incremental` will perform an incremental backup. Backups can be automated by pasting the `cron` file into the crontab file. By default it will make incremental backups daily and full backups every other week.
