@@ -7,6 +7,7 @@ set -o pipefail
 PORT=25575
 PASSWORD="password"
 
+cd "$(dirname "$0")";
 SOURCE_DIR="$PWD"
 BACKUP_DIR="$PWD/backups"
 DATETIME="$(date '+%Y-%m-%dT%H:%M:%SZ')-$1"
